@@ -3,7 +3,7 @@ package com.arthwrntzch.SpringBootToDoList.entity;
 import com.arthwrntzch.SpringBootToDoList.enums.TaskStatus;
 import jakarta.persistence.*;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -21,10 +21,14 @@ public class Task {
 
   @ManyToOne
   @JoinColumn(name = "user_id")
-  private User user;
+  private int userId;
 
   private String name;
+
   private String description;
+
+  @Enumerated(EnumType.STRING)
   private TaskStatus status;
-  private LocalDateTime dueDate;
+
+  private LocalDate dueDate;
 }

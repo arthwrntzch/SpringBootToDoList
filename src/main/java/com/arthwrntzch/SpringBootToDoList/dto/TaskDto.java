@@ -18,5 +18,6 @@ public class TaskDto {
     private String description;
     private String status;
     private LocalDate dueDate;
-    private User user;
+    private int userId;
 }
+

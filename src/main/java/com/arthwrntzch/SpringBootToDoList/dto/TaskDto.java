@@ -1,6 +1,5 @@
 package com.arthwrntzch.SpringBootToDoList.dto;
 
-import com.arthwrntzch.SpringBootToDoList.entity.User;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

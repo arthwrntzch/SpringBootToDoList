@@ -10,6 +10,8 @@ import java.util.Set;
 
 @Data
 @Entity
+@AllArgsConstructor
+@NoArgsConstructor
 @Table(name = "Users")
 public class User {
     @Id
@@ -18,12 +20,5 @@ public class User {
 
     @OneToMany(mappedBy = "userId")
     private Set<Task> tasks = new HashSet<>();
-
-    public User(int id) {
-        this.id = id;
-    }
-
-    public User() {
-    }
 }
 

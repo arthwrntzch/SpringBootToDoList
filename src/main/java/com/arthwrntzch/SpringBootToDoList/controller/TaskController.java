@@ -16,13 +16,11 @@ public class TaskController {
     private final TaskService taskService;
     public TaskController(TaskService taskService) { this.taskService = taskService; }
 
-    /** Получить все задачи */
     @GetMapping("/list")
     public List<TaskDto> getAllTasks() {
         return taskService.getAllTasks();
     }
 
-    /** Получить задачу по id */
     @GetMapping("/{id}")
     public ResponseEntity<TaskDto> getById(@PathVariable int id) {
         TaskDto dto = taskService.getById(id);

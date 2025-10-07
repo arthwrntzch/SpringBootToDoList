@@ -4,7 +4,6 @@ import com.arthwrntzch.SpringBootToDoList.entity.User;
 import com.arthwrntzch.SpringBootToDoList.repository.UserRepository;
 import org.springframework.stereotype.Service;
 
-
 import java.util.List;
 
 @Service
@@ -15,11 +14,15 @@ public class UserService {
         this.userRepository = userRepository;
     }
 
-    public User createUser(User user) { return userRepository.save(user); }
+    public User createUser(User user) {
+        return userRepository.save(user);
+    }
 
-    public List<User> getAllUsers() { return userRepository.findAll(); }
+    public List<User> getAllUsers() {
+        return userRepository.findAll();
+    }
 
-    public User getUserById(int id) {
+    public User getUserById(Long id) {
         return userRepository.findById(id).orElse(null);
     }
 }

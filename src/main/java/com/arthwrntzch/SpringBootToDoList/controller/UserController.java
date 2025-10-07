@@ -31,7 +31,7 @@ public class UserController {
     public List<User> getAllUsers() { return userService.getAllUsers(); }
 
     @GetMapping("/{id}")
-    public ResponseEntity<User> getUserById(@PathVariable int id) {
+    public ResponseEntity<User> getUserById(@PathVariable Long id) {
         User user = userService.getUserById(id);
         return user != null ? ResponseEntity.ok(user)
                 : ResponseEntity.notFound().build();

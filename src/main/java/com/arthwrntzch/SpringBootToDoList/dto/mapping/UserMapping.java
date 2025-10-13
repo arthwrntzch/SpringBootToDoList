@@ -1,18 +1,20 @@
 package com.arthwrntzch.SpringBootToDoList.dto.mapping;
 
+import com.arthwrntzch.SpringBootToDoList.dto.UserDto;
+import com.arthwrntzch.SpringBootToDoList.entity.User;
 import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
+import org.mapstruct.ReportingPolicy;
 
-import com.arthwrntzch.SpringBootToDoList.dto.TaskDto;
-import com.arthwrntzch.SpringBootToDoList.entity.Task;
-
-@Mapper(componentModel = "spring")
+@Mapper(
+        componentModel = "spring",
+        uses = { TaskMapping.class },
+        unmappedTargetPolicy = ReportingPolicy.IGNORE
+)
 public interface UserMapping {
 
-    @Mapping(source = "user.id", target = "user")
-    TaskDto toDto(Task task);
+    // User -> UserDto
+    UserDto toDto(User user);
 
-    @Mapping(source = "user", target = "user.id")
-    Task toEntity(TaskDto taskDto);
-
+    // UserDto -> User
+    User toEntity(UserDto dto);
 }

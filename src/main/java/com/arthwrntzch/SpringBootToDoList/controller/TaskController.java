@@ -31,7 +31,7 @@ public class TaskController {
     @GetMapping("/{id}")
     public ResponseEntity<TaskDto> getById(@PathVariable Long id) {
         TaskDto dto = taskService.getById(id);
-        return dto != null ? ResponseEntity.ok(dto) : ResponseEntity.notFound().build();
+        return ResponseEntity.ok(dto);
     }
 
     @GetMapping("/user/{userId}")
@@ -53,9 +53,6 @@ public class TaskController {
             @PathVariable Long taskId,
             @RequestBody TaskDto taskDto) {
         Task updated = taskService.updateTask(taskId, taskDto);
-        if (updated == null) {
-            return ResponseEntity.notFound().build();
-        }
         return ResponseEntity.ok(taskMapping.toDto(updated));
     }
 

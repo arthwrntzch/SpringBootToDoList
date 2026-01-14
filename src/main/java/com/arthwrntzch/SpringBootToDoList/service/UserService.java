@@ -2,7 +2,9 @@ package com.arthwrntzch.SpringBootToDoList.service;
 
 import com.arthwrntzch.SpringBootToDoList.entity.User;
 import com.arthwrntzch.SpringBootToDoList.repository.UserRepository;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
@@ -23,6 +25,7 @@ public class UserService {
     }
 
     public User getUserById(Long id) {
-        return userRepository.findById(id).orElse(null);
+        return userRepository.findById(id)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found: " + id));
     }
 }

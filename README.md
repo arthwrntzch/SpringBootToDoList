@@ -11,7 +11,7 @@
 - Создание, обновление и удаление задач
 - Привязка задач к пользователям
 - Получение всех задач или задач конкретного пользователя
-- Работа со статусами задач (`TODO`, `IN_PROGRESS`, `DONE`)
+- Работа со статусами задач (`TODO`, `IN_PROGRESS`, `COMPLETE`)
 
 ---
 
@@ -120,7 +120,7 @@ Content-Type: application/json
   "name": "Купить продукты",
   "description": "Хлеб, молоко, овощи",
   "status": "TODO",
-  "dueDate": "2025-10-05T18:00:00",
+  "dueDate": "2025-10-05",
   "userId": 1
 }
 ```
@@ -135,7 +135,7 @@ Content-Type: application/json
   "name": "Купить продукты и напитки",
   "description": "Хлеб, молоко, овощи, сок",
   "status": "IN_PROGRESS",
-  "dueDate": "2025-10-07T12:00:00",
+  "dueDate": "2025-10-07",
   "userId": 1
 }
 ```
@@ -152,7 +152,7 @@ DELETE /api/tasks/{taskId}
 В проекте определено перечисление `TaskStatus`:
 - `TODO`
 - `IN_PROGRESS`
-- `DONE`
+- `COMPLETE`
 
 ---
 

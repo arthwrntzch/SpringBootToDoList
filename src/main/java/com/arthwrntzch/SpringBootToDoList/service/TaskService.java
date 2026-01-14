@@ -1,5 +1,13 @@
 package com.arthwrntzch.SpringBootToDoList.service;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import org.springframework.http.HttpStatus;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.server.ResponseStatusException;
+
 import com.arthwrntzch.SpringBootToDoList.dto.TaskDto;
 import com.arthwrntzch.SpringBootToDoList.dto.mapping.TaskMapping;
 import com.arthwrntzch.SpringBootToDoList.entity.Task;
@@ -7,10 +15,6 @@ import com.arthwrntzch.SpringBootToDoList.entity.User;
 import com.arthwrntzch.SpringBootToDoList.enums.TaskStatus;
 import com.arthwrntzch.SpringBootToDoList.repository.TaskRepository;
 import com.arthwrntzch.SpringBootToDoList.repository.UserRepository;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
-import java.util.*;
 
 @Service
 @Transactional
@@ -30,10 +34,9 @@ public class TaskService {
 
     public Task createTask(Long userId, TaskDto taskDto) {
         User user = userRepository.findById(userId)
-                .orElseThrow(() -> new IllegalArgumentException("User not found: " + userId));
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found: " + userId));
 
         Task task = taskMapping.toEntity(taskDto);
-        // подстрахуем: если статус не пришёл — зададим дефолт
         if (task.getStatus() == null)
             task.setStatus(TaskStatus.TODO);
         task.setUser(user);
@@ -43,7 +46,7 @@ public class TaskService {
 
     public Task updateTask(Long taskId, TaskDto taskDto) {
         Task task = taskRepository.findById(taskId)
-                .orElseThrow(() -> new IllegalArgumentException("Task not found: " + taskId));
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Task not found: " + taskId));
 
         if (taskDto.getName() != null)
             task.setName(taskDto.getName());
@@ -59,7 +62,7 @@ public class TaskService {
         }
         if (taskDto.getUserId() != null && taskDto.getUserId() > 0) {
             User newUser = userRepository.findById(taskDto.getUserId())
-                    .orElseThrow(() -> new IllegalArgumentException("User not found: " + taskDto.getUserId()));
+                    .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found: " + taskDto.getUserId()));
             task.setUser(newUser);
         }
 
@@ -77,7 +80,7 @@ public class TaskService {
     public TaskDto getById(Long id) {
         return taskRepository.findById(id)
                 .map(taskMapping::toDto)
-                .orElse(null);
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Task not found: " + id));
     }
 
     @Transactional(readOnly = true)

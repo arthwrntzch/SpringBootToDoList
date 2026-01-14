@@ -5,6 +5,7 @@ import com.arthwrntzch.SpringBootToDoList.entity.Task;
 import com.arthwrntzch.SpringBootToDoList.enums.TaskStatus;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
+import org.mapstruct.Named;
 import org.mapstruct.ReportingPolicy;
 
 @Mapper(
@@ -20,7 +21,19 @@ public interface TaskMapping {
     TaskDto toDto(Task task);
 
     // TaskDto -> Task (user выставляем в сервисе по dto.getUserId())
-    @Mapping(target = "status", expression = "java(dto.getStatus() != null ? TaskStatus.valueOf(dto.getStatus().trim().toUpperCase()) : null)")
+    @Mapping(target = "status", source = "status", qualifiedByName = "toTaskStatus")
     @Mapping(target = "user", ignore = true)
     Task toEntity(TaskDto dto);
+
+    @Named("toTaskStatus")
+    default TaskStatus toTaskStatus(String status) {
+        if (status == null || status.trim().isEmpty()) {
+            return null;
+        }
+        try {
+            return TaskStatus.valueOf(status.trim().toUpperCase());
+        } catch (IllegalArgumentException ex) {
+            return null;
+        }
+    }
 }
